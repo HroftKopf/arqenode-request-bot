@@ -8,11 +8,72 @@
 [REMEDIATION_REPORT.md](REMEDIATION_REPORT.md), инструкция —
 в [README.md](README.md).
 
+## 2026-11-24 — CI/CD, README, скриншоты, проверка публикации
+
+**Тип:** ci, docs, security.
+
+**Статус:** CI и документация готовы; удалённый запуск ожидает push.
+
+**Деплой/push:** не выполнялись; production-бот не запускался.
+
+### Добавлено
+
+- `.github/workflows/ci.yml` — GitHub Actions: Python 3.11, Ruff, compileall,
+  `unittest`, coverage с порогом 80%, permissions `contents: read`, timeout 15
+  минут, кэш pip.
+- `docs/SCREENSHOTS.md` — безопасная инструкция по съёмке пяти скриншотов,
+  тестовые данные, что скрывать и шаблон для README.
+- `docs/screenshots/.gitkeep` — каталог для будущих реальных изображений.
+- `CI_IMPLEMENTATION_REPORT.md` — отчёт по CI, README и security-проверке.
+
+### Изменено
+
+- `README.md` — CI badge, полная установка с `git clone`, требования,
+  переменные окружения, тесты/покрытие, архитектура, демонстрация,
+  безопасность и ссылки на документацию.
+- `.env.example` — вместо синтаксически валидных dummy-ID теперь невалидная
+  заглушка `ADMIN_IDS=PUT_YOUR_TELEGRAM_ID_HERE`, чтобы случайный запуск без
+  настройки не выдал админку посторонним ID.
+
+### Проверки
+
+- В чистом окружении без `.env`, БД, логов и бэкапов: **147 тестов, 0
+  провалов**; **97.95%** строк (1001/1022), **98.24%** ветвей (279/284),
+  итог coverage.py **98.01%**.
+- Локально с рабочим `.env`: 147 тестов, 97.65% строк, 97.78% coverage.py
+  (ветка импортной ошибки конфигурации не исполняется).
+- `ruff check .` — чисто; `compileall` — OK; AST-проверка грамматики Python
+  3.11 — 27 файлов OK.
+- YAML workflow разобран PyYAML; `actionlint` и удалённый GitHub Actions не
+  запускались (push не выполнялся).
+- Python 3.11 локально недоступен (только 3.14.10); зависимости
+  `aiogram 3.34` и `coverage 7.17.5` требуют Python >=3.11 и совместимы.
+
+### Безопасность
+
+- Проверены все publishable-файлы (tracked + untracked, 39 шт.): реальных
+  токенов, Telegram ID, ключей и приватных ключей нет; найдены только
+  timestamp-числа в документации.
+- `.env`, `requests.db`, `bot.log`, `main.py.backup`, `.env.backup` и
+  `backups/` игнорируются и не staged; `git check-ignore` подтверждает.
+- Новые файлы не содержат секретов.
+
+### Вручную
+
+- Просмотреть diff, закоммитить и выполнить push (без отдельного разрешения
+  не делалось).
+- Проверить первый запуск CI во вкладке Actions и badge.
+- Сделать реальные скриншоты по `docs/SCREENSHOTS.md` и добавить их в README.
+- Включить GitHub secret scanning/push protection; при желании скрыть email
+  автора коммита.
+
 ## 2026-11-23 — Bugfix & remediation (14 проблем аудита)
 
-**Тип:** security, bugfix, architecture, tests, docs.  
+**Тип:** security, bugfix, architecture, tests, docs.
+
 **Статус:** 13 проблем исправлены полностью, FSM — частично (персистентность
-сознательно не добавлялась).  
+сознательно не добавлялась).
+
 **Деплой:** не выполнялся. Реальный Telegram API не вызывался.
 
 ### Исправлено
