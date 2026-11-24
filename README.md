@@ -45,16 +45,26 @@ backend-разработки на Python: асинхронный Telegram-бот
 | Качество | `coverage.py`, Ruff |
 | CI | GitHub Actions |
 
+
 ## Демонстрация интерфейса
 
-Скриншоты пока не добавлены — у агента не было доступа к Telegram UI, а
-фиктивные изображения в репозиторий не добавляются. Планируемые файлы:
-`main-menu.png`, `create-ticket.png`, `ticket-details.png`,
-`admin-panel.png`, `ticket-dialog.png`.
+### Главное меню
+Клиентское меню для создания заявок, просмотра обращений и получения помощи.
 
-Инструкция по безопасной съёмке, тестовые данные и шаблон для README:
-[docs/SCREENSHOTS.md](docs/SCREENSHOTS.md). После появления реальных
-изображений в `docs/screenshots/` README будет дополнен без битых ссылок.
+<img src="docs/screenshots/main-menu.png" alt="Главное меню" width="700">
+
+### Создание заявки
+Пошаговое создание обращения: выбор категории и описание задачи.
+
+<img src="docs/screenshots/ticket-category.png" alt="Выбор категории" width="700">
+
+<img src="docs/screenshots/ticket-description.png" alt="Описание задачи" width="700">
+
+### Административная панель
+Управление обращениями и фильтрация заявок по статусам.
+
+<img src="docs/screenshots/admin-panel.png" alt="Административная панель" width="700">
+
 
 ## Требования к системе
 
